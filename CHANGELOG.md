@@ -1,10 +1,10 @@
 # Changelog
 
-## 0.1.3
+## 0.3.0
 
 - Some minor bug fixes and improvements.
 
-## 0.1.2
+## 0.2.0
 
 - Optional routing with **go_router** (`--[no-]router`): generates `app_router.dart`
   with a ready `appRouter` and wires `main.dart` to use `MaterialApp.router`.
@@ -13,6 +13,10 @@
 - Generates `AGENT_RULE.md` — tailored guidance so AI coding assistants keep the
   chosen architecture and state management and avoid common mistakes.
 - Summary card now shows Routing and DI choices.
+
+## 0.1.3
+
+- Some minor bug fixes and improvements.
 
 ## 0.1.0
 

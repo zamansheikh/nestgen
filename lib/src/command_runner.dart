@@ -6,7 +6,7 @@ import 'package:mason_logger/mason_logger.dart';
 import 'commands/create_command.dart';
 import 'utils/banner.dart';
 
-const String _version = '0.1.3';
+const String _version = '0.3.0';
 
 /// Top-level runner for the `nestgen` executable.
 class NestgenCommandRunner extends CommandRunner<int> {

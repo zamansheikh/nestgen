@@ -57,6 +57,7 @@ Add this to your `PATH` (System Environment Variables):
 ```
 %LOCALAPPDATA%\Pub\Cache\bin
 ```
+
 </details>
 
 <details>
@@ -67,7 +68,9 @@ Add this to your `~/.zshrc`, `~/.bashrc`, or `~/.profile`:
 ```bash
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 ```
+
 Then restart your terminal (or `source` the file).
+
 </details>
 
 ### Local development (before publishing)
@@ -89,7 +92,7 @@ nest
 ```
 
 ```text
-   █▄░█ █▀▀ █▀▀ ▀█▀ █▀▀ █▀▀ █▄░█   v0.1.3
+   █▄░█ █▀▀ █▀▀ ▀█▀ █▀▀ █▀▀ █▄░█   v0.3.0
    █░▀█ ██▄ ▄▄█ ░█░ █▄█ ██▄ █░▀█
    Rich Flutter project scaffolder  ·  clean · mvc
    ───────────────────────────────────────────
@@ -128,18 +131,18 @@ nestgen create my_app --arch clean --no-flutter-create
 
 ### Options
 
-| Flag | Description |
-|------|-------------|
-| `-a, --arch` | `clean` or `mvc`. Omit to choose interactively. |
-| `-s, --state` | `none`, `provider`, `riverpod`, `bloc`, or `getx`. |
-| `-f, --feature` | First feature name (Clean Architecture only). Default `home`. |
-| `--org` | Organization (reverse-domain), e.g. `com.example`. |
-| `--[no-]router` | Use `go_router` for navigation. |
-| `--[no-]di` | Add dependency injection with `get_it`. |
-| `--[no-]theme` | Add a light/dark theme setup. |
-| `--[no-]l10n` | Enable localization (multi-language). |
-| `--no-flutter-create` | Scaffold folders only; don't run `flutter create`. |
-| `--version` | Print the version. |
+| Flag                  | Description                                                   |
+| --------------------- | ------------------------------------------------------------- |
+| `-a, --arch`          | `clean` or `mvc`. Omit to choose interactively.               |
+| `-s, --state`         | `none`, `provider`, `riverpod`, `bloc`, or `getx`.            |
+| `-f, --feature`       | First feature name (Clean Architecture only). Default `home`. |
+| `--org`               | Organization (reverse-domain), e.g. `com.example`.            |
+| `--[no-]router`       | Use `go_router` for navigation.                               |
+| `--[no-]di`           | Add dependency injection with `get_it`.                       |
+| `--[no-]theme`        | Add a light/dark theme setup.                                 |
+| `--[no-]l10n`         | Enable localization (multi-language).                         |
+| `--no-flutter-create` | Scaffold folders only; don't run `flutter create`.            |
+| `--version`           | Print the version.                                            |
 
 ---
 
@@ -182,13 +185,13 @@ Pick one and nestgen does the rest — adds the dependency, runs `flutter pub ge
 scaffolds a working counter example in the correct layer, and wires `main.dart`
 (`ProviderScope` for Riverpod, `GetMaterialApp` for GetX, and so on).
 
-| Option | Package | Added version |
-|--------|---------|---------------|
-| Provider | [`provider`](https://pub.dev/packages/provider) | `^6.1.5` |
-| Riverpod | [`flutter_riverpod`](https://pub.dev/packages/flutter_riverpod) | `^3.3.2` |
-| Bloc | [`flutter_bloc`](https://pub.dev/packages/flutter_bloc) | `^9.1.1` |
-| GetX | [`get`](https://pub.dev/packages/get) | `^4.7.3` |
-| None | — | — |
+| Option   | Package                                                         | Added version |
+| -------- | --------------------------------------------------------------- | ------------- |
+| Provider | [`provider`](https://pub.dev/packages/provider)                 | `^6.1.5`      |
+| Riverpod | [`flutter_riverpod`](https://pub.dev/packages/flutter_riverpod) | `^3.3.2`      |
+| Bloc     | [`flutter_bloc`](https://pub.dev/packages/flutter_bloc)         | `^9.1.1`      |
+| GetX     | [`get`](https://pub.dev/packages/get)                           | `^4.7.3`      |
+| None     | —                                                               | —             |
 
 ---
 
