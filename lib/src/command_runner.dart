@@ -10,6 +10,8 @@ const String _version = '0.1.0';
 
 /// Top-level runner for the `arch_gen` executable.
 class ArchGenCommandRunner extends CommandRunner<int> {
+  /// Creates the runner, registering the `create` command. Pass a [logger]
+  /// to capture or customize output (defaults to a standard [Logger]).
   ArchGenCommandRunner({Logger? logger})
       : _logger = logger ?? Logger(),
         super('arch_gen',
