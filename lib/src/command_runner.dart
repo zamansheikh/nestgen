@@ -8,18 +8,18 @@ import 'utils/banner.dart';
 
 const String _version = '0.1.0';
 
-/// Top-level runner for the `arch_gen` executable.
-class ArchGenCommandRunner extends CommandRunner<int> {
+/// Top-level runner for the `nestgen` executable.
+class NestgenCommandRunner extends CommandRunner<int> {
   /// Creates the runner, registering the `create` command. Pass a [logger]
   /// to capture or customize output (defaults to a standard [Logger]).
-  ArchGenCommandRunner({Logger? logger})
+  NestgenCommandRunner({Logger? logger})
       : _logger = logger ?? Logger(),
-        super('arch_gen',
-            'Scaffold a new Flutter project with a Clean Architecture or MVC structure.') {
+        super('nestgen',
+            'Scaffold a Flutter project with a Clean Architecture or MVC structure.') {
     argParser.addFlag(
       'version',
       negatable: false,
-      help: 'Print the arch_gen version.',
+      help: 'Print the nestgen version.',
     );
     addCommand(CreateCommand(_logger));
   }
@@ -31,7 +31,7 @@ class ArchGenCommandRunner extends CommandRunner<int> {
     try {
       final topLevel = parse(args);
       if (topLevel['version'] == true) {
-        _logger.info('arch_gen $_version');
+        _logger.info('nestgen $_version');
         return ExitCode.success.code;
       }
 
@@ -53,7 +53,7 @@ class ArchGenCommandRunner extends CommandRunner<int> {
     }
   }
 
-  /// Arrow-key main menu shown when `arch_gen` is run with no command.
+  /// Arrow-key main menu shown when `nestgen` is run with no command.
   Future<int> _runInteractiveMenu() async {
     printBanner(_logger, version: _version);
 

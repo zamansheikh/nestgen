@@ -1,4 +1,4 @@
-/// The architecture styles supported by arch_gen.
+/// The architecture styles supported by nestgen.
 enum Architecture {
   clean(
     id: 'clean',

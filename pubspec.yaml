@@ -1,9 +1,9 @@
-name: arch_gen
+name: nestgen
 description: Interactive command-line tool that scaffolds Flutter apps with Clean Architecture or MVC, plus state management, theming, and localization.
 version: 0.1.0
-repository: https://github.com/zamansheikh/arch_gen
-homepage: https://github.com/zamansheikh/arch_gen
-issue_tracker: https://github.com/zamansheikh/arch_gen/issues
+repository: https://github.com/zamansheikh/nestgen
+homepage: https://github.com/zamansheikh/nestgen
+issue_tracker: https://github.com/zamansheikh/nestgen/issues
 funding:
   - https://ko-fi.com/zamansheikh
   - https://www.buymeacoffee.com/zamansheikh
@@ -19,9 +19,9 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 executables:
-  arch_gen: arch_gen
-  archgen: arch_gen
-  agen: arch_gen
+  nestgen: nestgen
+  ngen: nestgen
+  nest: nestgen
 
 dependencies:
   args: ^2.7.0

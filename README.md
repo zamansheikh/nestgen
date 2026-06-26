@@ -1,14 +1,14 @@
-<h1 align="center">⚡ arch_gen</h1>
+<h1 align="center">🪺 nestgen</h1>
 
 <p align="center">
-  <b>A rich, interactive CLI that scaffolds a new Flutter project with a production-ready
+  <b>A rich, interactive CLI that scaffolds a Flutter project with a production-ready
   Clean Architecture or MVC structure — in seconds.</b>
 </p>
 
 <p align="center">
-  <a href="https://pub.dev/packages/arch_gen"><img src="https://img.shields.io/pub/v/arch_gen.svg?logo=dart&color=blue" alt="pub version"></a>
-  <a href="https://pub.dev/packages/arch_gen/score"><img src="https://img.shields.io/pub/points/arch_gen?logo=dart&color=brightgreen" alt="pub points"></a>
-  <a href="https://pub.dev/packages/arch_gen"><img src="https://img.shields.io/pub/likes/arch_gen?logo=dart" alt="pub likes"></a>
+  <a href="https://pub.dev/packages/nestgen"><img src="https://img.shields.io/pub/v/nestgen.svg?logo=dart&color=blue" alt="pub version"></a>
+  <a href="https://pub.dev/packages/nestgen/score"><img src="https://img.shields.io/pub/points/nestgen?logo=dart&color=brightgreen" alt="pub points"></a>
+  <a href="https://pub.dev/packages/nestgen"><img src="https://img.shields.io/pub/likes/nestgen?logo=dart" alt="pub likes"></a>
   <img src="https://img.shields.io/badge/platforms-windows%20%7C%20macos%20%7C%20linux-informational" alt="platforms">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-purple.svg" alt="license"></a>
 </p>
@@ -30,19 +30,19 @@
 - 🏷️ **Smart project setup** — prompts for organization and shows the full package id (`com.example.my_app`).
 - ✅ **Green out of the box** — replaces Flutter's default counter test so `flutter analyze` and `flutter test` pass immediately.
 - 💻 **Cross-platform** — works the same on **Windows, macOS, and Linux**.
-- 🔤 **Three aliases** — call it `arch_gen`, `archgen`, or `agen`.
+- 🔤 **Three aliases** — call it `nestgen`, `ngen`, or `nest`.
 
 ---
 
 ## 📦 Installation
 
-arch_gen is a global Dart command-line tool. Install it once:
+nestgen is a global Dart command-line tool. Install it once:
 
 ```bash
-dart pub global activate arch_gen
+dart pub global activate nestgen
 ```
 
-That installs **three interchangeable commands** — `arch_gen`, `archgen`, and `agen`.
+That installs **three interchangeable commands** — `nestgen`, `ngen`, and `nest`.
 
 > **Make sure the pub global bin directory is on your `PATH`.**
 
@@ -70,8 +70,8 @@ Then restart your terminal (or `source` the file).
 ### Local development (before publishing)
 
 ```bash
-git clone https://github.com/zamansheikh/arch_gen.git
-cd arch_gen
+git clone https://github.com/zamansheikh/nestgen.git
+cd nestgen
 dart pub global activate --source path .
 ```
 
@@ -82,14 +82,14 @@ dart pub global activate --source path .
 Just run it and follow the prompts:
 
 ```bash
-agen
+nest
 ```
 
 ```text
-   ▄▀█ █▀█ █▀▀ █░█ ▄▄ █▀▀ █▀▀ █▄░█   v0.1.0
-   █▀█ █▀▄ █▄▄ █▀█ ░░ █▄█ ██▄ █░▀█
+   █▄░█ █▀▀ █▀▀ ▀█▀ █▀▀ █▀▀ █▄░█   v0.1.0
+   █░▀█ ██▄ ▄▄█ ░█░ █▄█ ██▄ █░▀█
    Rich Flutter project scaffolder  ·  clean · mvc
-   ─────────────────────────────────────────────
+   ───────────────────────────────────────────
 
 ? What would you like to do? (↑/↓ to move, enter to select)
 ❯ Create a new Flutter project
@@ -114,13 +114,13 @@ Any flag you provide skips its prompt — perfect for CI or quick scaffolding:
 
 ```bash
 # Clean Architecture + Riverpod, with theme & localization
-arch_gen create my_app --arch clean --state riverpod --org com.acme --theme --l10n
+nestgen create my_app --arch clean --state riverpod --org com.acme --theme --l10n
 
 # MVC + Bloc, no theme, no localization
-arch_gen create shop_app --arch mvc --state bloc --no-theme --no-l10n
+nestgen create shop_app --arch mvc --state bloc --no-theme --no-l10n
 
 # Scaffold folders only (don't run `flutter create`)
-arch_gen create my_app --arch clean --no-flutter-create
+nestgen create my_app --arch clean --no-flutter-create
 ```
 
 ### Options
@@ -173,7 +173,7 @@ lib/
 
 ## 🧩 State management
 
-Pick one and arch_gen does the rest — adds the dependency, runs `flutter pub get`,
+Pick one and nestgen does the rest — adds the dependency, runs `flutter pub get`,
 scaffolds a working counter example in the correct layer, and wires `main.dart`
 (`ProviderScope` for Riverpod, `GetMaterialApp` for GetX, and so on).
 
@@ -189,11 +189,11 @@ scaffolds a working counter example in the correct layer, and wires `main.dart`
 
 ## 🗺️ Roadmap
 
-- [ ] `arch_gen feature <name>` — add a feature to an existing project.
+- [ ] `nestgen feature <name>` — add a feature to an existing project.
 - [ ] More presets (DI with `get_it`, routing with `go_router`).
 - [ ] Custom template overrides.
 
-Have an idea? [Open an issue](https://github.com/zamansheikh/arch_gen/issues).
+Have an idea? [Open an issue](https://github.com/zamansheikh/nestgen/issues).
 
 ---
 
@@ -206,7 +206,7 @@ Please run `dart analyze` and `dart test` before submitting.
 
 ## ❤️ Support
 
-If arch_gen saves you time, consider supporting its development — it genuinely helps!
+If nestgen saves you time, consider supporting its development — it genuinely helps!
 
 <p align="center">
   <a href="https://ko-fi.com/zamansheikh"><img src="https://img.shields.io/badge/Ko--fi-Buy%20me%20a%20coffee-FF5E5B?style=for-the-badge&logo=ko-fi&logoColor=white" alt="Ko-fi"></a>
@@ -216,7 +216,7 @@ If arch_gen saves you time, consider supporting its development — it genuinely
 
 - ☕ **Buy Me a Coffee:** https://www.buymeacoffee.com/zamansheikh
 - 💜 **Ko-fi:** https://ko-fi.com/zamansheikh
-- ⭐ **Star the repo** on [GitHub](https://github.com/zamansheikh/arch_gen) — it means a lot!
+- ⭐ **Star the repo** on [GitHub](https://github.com/zamansheikh/nestgen) — it means a lot!
 
 ---
 
@@ -231,11 +231,11 @@ GitHub: [@zamansheikh](https://github.com/zamansheikh)
 
 Released under the **[Apache License 2.0](LICENSE)**. © 2026 Zaman Sheikh.
 
-You are free to use and build on arch_gen, but the license requires you to:
+You are free to use and build on nestgen, but the license requires you to:
 
 - **keep attribution** — retain the copyright, license, and [`NOTICE`](NOTICE) notices;
 - **state your changes** — mark any files you modify; and
-- **not rebrand it as your own** — the `arch_gen` name and the author's name may
+- **not rebrand it as your own** — the `nestgen` name and the author's name may
   not be used to endorse or promote derived products without written permission
   (Apache-2.0 §6, Trademarks).
 

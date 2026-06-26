@@ -5,8 +5,8 @@
 Initial release.
 
 - Rich, interactive terminal UI: arrow-key menus with a recommended default,
-  plus a main menu when running `arch_gen` with no command.
-- Three interchangeable commands installed together: `arch_gen`, `archgen`, `agen`.
+  plus a main menu when running `nestgen` with no command.
+- Three interchangeable commands installed together: `nestgen`, `ngen`, `nest`.
 - Architectures: **Clean Architecture** (feature-first) and **MVC**.
 - State management: **None, Provider, Riverpod, Bloc, GetX** (`-s/--state`) —
   adds the matching dependency, runs `flutter pub get`, and scaffolds a working

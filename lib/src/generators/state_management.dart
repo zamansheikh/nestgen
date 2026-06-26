@@ -1,4 +1,4 @@
-/// State-management options offered by arch_gen.
+/// State-management options offered by nestgen.
 enum StateManagement {
   none(
     id: 'none',

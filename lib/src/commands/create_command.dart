@@ -14,7 +14,7 @@ import '../utils/flutter_cli.dart';
 import '../utils/pubspec_patcher.dart';
 import '../utils/scaffold.dart';
 
-/// `arch_gen create [name]` — scaffold a new Flutter project.
+/// `nestgen create [name]` — scaffold a new Flutter project.
 class CreateCommand extends Command<int> {
   CreateCommand(this._logger) {
     argParser
@@ -65,7 +65,7 @@ class CreateCommand extends Command<int> {
   String get description => 'Create a new Flutter project with a chosen architecture.';
 
   @override
-  String get invocation => 'arch_gen create [name] [options]';
+  String get invocation => 'nestgen create [name] [options]';
 
   bool get _interactive => stdin.hasTerminal;
 
@@ -312,7 +312,7 @@ class CreateCommand extends Command<int> {
       ..info('  $bar  flutter run')
       ..info('  ${lightGreen.wrap('╰─')}')
       ..info('')
-      ..info(darkGray.wrap('  Enjoying arch_gen? Support development: '
+      ..info(darkGray.wrap('  Enjoying nestgen? Support development: '
           'https://ko-fi.com/zamansheikh')!);
   }
 
