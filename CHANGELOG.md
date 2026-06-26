@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.2.0
+## 0.1.3
+
+- Some minor bug fixes and improvements.
+
+## 0.1.2
 
 - Optional routing with **go_router** (`--[no-]router`): generates `app_router.dart`
   with a ready `appRouter` and wires `main.dart` to use `MaterialApp.router`.
