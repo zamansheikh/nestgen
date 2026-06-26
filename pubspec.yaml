@@ -1,6 +1,6 @@
 name: nestgen
 description: Interactive command-line tool that scaffolds Flutter apps with Clean Architecture or MVC, plus state management, theming, and localization.
-version: 0.1.0
+version: 0.2.0
 repository: https://github.com/zamansheikh/nestgen
 homepage: https://github.com/zamansheikh/nestgen
 issue_tracker: https://github.com/zamansheikh/nestgen/issues

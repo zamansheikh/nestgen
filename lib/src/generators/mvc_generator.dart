@@ -15,6 +15,11 @@ class MvcGenerator {
       importPrefix: '../../controllers/',
     );
 
+    // Routing: go_router (app_router.dart) or a Navigator routes map.
+    final routesImport = config.useGoRouter
+        ? 'routes/app_router.dart'
+        : 'routes/app_routes.dart';
+
     final directories = <String>[
       'lib/models',
       'lib/views/home',
@@ -23,6 +28,7 @@ class MvcGenerator {
       'lib/services',
       'lib/routes',
       'lib/utils',
+      if (config.enableDi) 'lib/di',
       if (config.enableTheme) 'lib/theme',
       if (config.enableL10n) 'lib/l10n',
       'test',
@@ -69,7 +75,13 @@ class ApiService {
       'lib/views/home/home_view.dart': presentation.pageContent,
       for (final entry in presentation.stateFiles.entries)
         'lib/controllers/${entry.key}': entry.value,
-      'lib/routes/app_routes.dart': '''
+      if (config.useGoRouter)
+        'lib/routes/app_router.dart': buildGoRouter(
+          homeImport: '../views/home/home_view.dart',
+          homeClass: 'HomeView',
+        )
+      else
+        'lib/routes/app_routes.dart': '''
 import 'package:flutter/material.dart';
 
 import '../views/home/home_view.dart';
@@ -84,13 +96,15 @@ class AppRoutes {
       };
 }
 ''',
+      if (config.enableDi) 'lib/di/service_locator.dart': buildServiceLocator(),
       'lib/main.dart': buildMainDart(
         config: config,
-        routesImport: 'routes/app_routes.dart',
+        routesImport: routesImport,
         constantsImport: 'utils/constants.dart',
         themeImport: 'theme/app_theme.dart',
         initialRouteExpr: 'AppRoutes.home',
         routesMapExpr: 'AppRoutes.routes',
+        diImport: 'di/service_locator.dart',
         appWidget: presentation.appWidget,
         extraPackageImports: presentation.mainExtraImports,
         runAppWrapOpen: presentation.runAppWrapOpen,

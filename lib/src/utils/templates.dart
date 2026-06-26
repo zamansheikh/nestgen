@@ -5,11 +5,12 @@ import '../models/project_config.dart';
 /// Shared file templates that depend on the user's feature toggles
 /// (localization, theming) and so are reused by every generator.
 
-/// Builds `lib/main.dart`, wiring up theme + l10n based on [config].
+/// Builds `lib/main.dart`, wiring up theme, l10n, routing (go_router) and
+/// dependency injection (get_it) based on [config].
 ///
-/// [routesImport]/[constantsImport]/[themeImport] are import paths relative to
-/// `lib/`. [homeRoute] is the initial route constant expression and
-/// [routesMap] the routes map expression.
+/// Import paths are relative to `lib/`. When [config.useGoRouter] is set,
+/// [routesImport] points at the go_router file and [routerConfigExpr] is the
+/// router instance; otherwise [initialRouteExpr]/[routesMapExpr] are used.
 String buildMainDart({
   required ProjectConfig config,
   required String routesImport,
@@ -17,18 +18,31 @@ String buildMainDart({
   required String themeImport,
   required String initialRouteExpr,
   required String routesMapExpr,
+  String routerConfigExpr = 'appRouter',
+  String diImport = '',
   String appWidget = 'MaterialApp',
   List<String> extraPackageImports = const [],
   String runAppWrapOpen = '',
   String runAppWrapClose = '',
 }) {
+  final useRouter = config.useGoRouter;
+  final useDi = config.enableDi;
+
+  // With go_router we force MaterialApp.router, so a state manager's app-widget
+  // import (e.g. GetX's `get` for GetMaterialApp) is no longer used. Wrapper
+  // imports (e.g. Riverpod's ProviderScope) are still needed.
+  final pkgImports = (useRouter && runAppWrapOpen.isEmpty)
+      ? const <String>[]
+      : extraPackageImports;
+
   final imports = <String>[
     "import 'package:flutter/material.dart';",
-    ...extraPackageImports,
+    ...pkgImports,
     '',
     "import '$routesImport';",
     "import '$constantsImport';",
     if (config.enableTheme) "import '$themeImport';",
+    if (useDi && diImport.isNotEmpty) "import '$diImport';",
     if (config.enableL10n) "import 'l10n/app_localizations.dart';",
   ];
 
@@ -46,27 +60,46 @@ String buildMainDart({
       supportedLocales: AppLocalizations.supportedLocales,'''
       : '';
 
+  final navLines = useRouter
+      ? '      routerConfig: $routerConfigExpr,'
+      : '      initialRoute: $initialRouteExpr,\n'
+          '      routes: $routesMapExpr,';
+
   final appBody = <String>[
     '      title: AppConstants.appName,',
     themeLines,
     if (l10nLines.isNotEmpty) l10nLines,
-    '      initialRoute: $initialRouteExpr,',
-    '      routes: $routesMapExpr,',
+    navLines,
   ].join('\n');
+
+  // go_router uses the .router constructor. GetMaterialApp.router doesn't accept
+  // routerConfig, so when routing is delegated to go_router we use
+  // MaterialApp.router universally — GetX state (controllers/Obx) still works.
+  final appConstructor = useRouter ? 'MaterialApp.router' : appWidget;
+
+  final mainFn = useDi
+      ? '''
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupLocator();
+  runApp(const ${runAppWrapOpen}MyApp()$runAppWrapClose);
+}'''
+      : '''
+void main() {
+  runApp(const ${runAppWrapOpen}MyApp()$runAppWrapClose);
+}''';
 
   return '''
 ${imports.join('\n')}
 
-void main() {
-  runApp(const ${runAppWrapOpen}MyApp()$runAppWrapClose);
-}
+$mainFn
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return $appWidget(
+    return $appConstructor(
 $appBody
     );
   }
@@ -169,6 +202,50 @@ synthetic-package: false
   };
 }
 
+/// Builds the go_router navigation file (`appRouter`). [homeImport] is the
+/// import path to the home page/view relative to the router file; [homeClass]
+/// is its widget class name.
+String buildGoRouter({required String homeImport, required String homeClass}) {
+  return '''
+import 'package:go_router/go_router.dart';
+
+import '$homeImport';
+
+/// Application router. Add routes here and navigate with `context.go('/path')`.
+final appRouter = GoRouter(
+  initialLocation: '/',
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const $homeClass(),
+    ),
+  ],
+);
+''';
+}
+
+/// Builds the get_it service locator. Registrations are left as commented
+/// examples so the file compiles for every architecture out of the box.
+String buildServiceLocator() {
+  return '''
+import 'package:get_it/get_it.dart';
+
+/// Global service locator. Register your dependencies in [setupLocator] and
+/// resolve them anywhere with `getIt<MyType>()`.
+final getIt = GetIt.instance;
+
+Future<void> setupLocator() async {
+  // Register your dependencies here. Examples:
+  //
+  //   getIt.registerLazySingleton<ApiService>(() => ApiService());
+  //   getIt.registerFactory<HomeController>(() => HomeController(getIt()));
+  //   getIt.registerSingletonAsync<Database>(() async => Database.open());
+  //
+  // Then resolve them with: getIt<ApiService>()
+}
+''';
+}
+
 /// Builds `AGENT_RULE.md` — a context file for AI coding assistants (Claude,
 /// Copilot, Cursor, …) so generated code keeps the chosen architecture and
 /// avoids common mistakes. Content is tailored to [config].
@@ -208,6 +285,35 @@ String buildAgentRules(ProjectConfig config) {
         'formatting). Run `dart format .` before committing.')
     ..writeln('- Prefer `const` constructors and immutable data where possible.')
     ..writeln();
+
+  if (config.useGoRouter) {
+    buffer
+      ..writeln('## Routing (go_router)')
+      ..writeln()
+      ..writeln('- Navigation uses **go_router**. The router is defined as '
+          '`appRouter` in the routing file.')
+      ..writeln('- Add screens as `GoRoute` entries; **do not** use '
+          '`Navigator.push` or a `routes:` map.')
+      ..writeln('- Navigate with `context.go(\'/path\')` (replace) or '
+          '`context.push(\'/path\')` (stack).')
+      ..writeln('- Pass data via path/query params or the `extra` field, not '
+          'global state.')
+      ..writeln();
+  }
+
+  if (config.enableDi) {
+    buffer
+      ..writeln('## Dependency injection (get_it)')
+      ..writeln()
+      ..writeln('- A global service locator `getIt` is configured in '
+          '`setupLocator()` (called from `main()` before `runApp`).')
+      ..writeln('- Register dependencies in `setupLocator()`; resolve them with '
+          '`getIt<MyType>()`. **Do not** instantiate services manually where a '
+          'registration exists.')
+      ..writeln('- Use `registerLazySingleton` for shared services and '
+          '`registerFactory` for throwaway instances.')
+      ..writeln();
+  }
 
   if (theme) {
     buffer

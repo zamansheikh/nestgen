@@ -11,6 +11,8 @@ class ProjectConfig {
     required this.stateManagement,
     required this.enableL10n,
     required this.enableTheme,
+    required this.enableDi,
+    required this.useGoRouter,
   });
 
   final String projectName;
@@ -20,6 +22,12 @@ class ProjectConfig {
   final StateManagement stateManagement;
   final bool enableL10n;
   final bool enableTheme;
+
+  /// Dependency injection via `get_it`.
+  final bool enableDi;
+
+  /// Navigation via `go_router` (instead of the Navigator routes map).
+  final bool useGoRouter;
 
   /// Full application package / bundle identifier, e.g. `com.example.my_app`.
   String get packageId => '$org.$projectName';

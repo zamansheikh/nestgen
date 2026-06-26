@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.0
+
+- Optional routing with **go_router** (`--[no-]router`): generates `app_router.dart`
+  with a ready `appRouter` and wires `main.dart` to use `MaterialApp.router`.
+- Optional dependency injection with **get_it** (`--[no-]di`): generates a
+  `service_locator.dart` (`getIt` + `setupLocator()`) called from `main()`.
+- Generates `AGENT_RULE.md` — tailored guidance so AI coding assistants keep the
+  chosen architecture and state management and avoid common mistakes.
+- Summary card now shows Routing and DI choices.
+
 ## 0.1.0
 
 Initial release.
@@ -15,7 +25,5 @@ Initial release.
 - Optional light/dark theme setup (`--[no-]theme`).
 - Optional localization (`--[no-]l10n`): adds `flutter_localizations`/`intl`,
   `generate: true`, `l10n.yaml`, ARB files, and runs codegen.
-- Generates `AGENT_RULE.md` — tailored guidance so AI coding assistants keep the
-  chosen architecture and state management and avoid common mistakes.
 - Replaces Flutter's default counter test with a smoke test so `flutter analyze`
   and `flutter test` pass on a freshly generated project.

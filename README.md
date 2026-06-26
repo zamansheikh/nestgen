@@ -25,6 +25,8 @@
 - 🎛️ **Rich interactive terminal UI** — navigate every choice with **↑/↓ arrow keys**, with the recommended option preselected.
 - 🏗️ **Two battle-tested architectures** — **Clean Architecture** (feature-first) and **MVC**.
 - 🧩 **State management, wired for you** — **Riverpod, Bloc, Provider, GetX**, or **None**. Adds the dependency, runs `pub get`, and scaffolds a working example.
+- 🧭 **Optional routing** — wire up [`go_router`](https://pub.dev/packages/go_router) with a ready `appRouter` (`MaterialApp.router`).
+- 💉 **Optional dependency injection** — set up [`get_it`](https://pub.dev/packages/get_it) with a `setupLocator()` service locator called from `main()`.
 - 🎨 **Optional theming** — light/dark `ThemeData` with `ThemeMode.system`.
 - 🌍 **Optional localization (l10n)** — `flutter_localizations` + `intl`, `l10n.yaml`, ARB files, and codegen — all set up.
 - 🏷️ **Smart project setup** — prompts for organization and shows the full package id (`com.example.my_app`).
@@ -132,6 +134,8 @@ nestgen create my_app --arch clean --no-flutter-create
 | `-s, --state` | `none`, `provider`, `riverpod`, `bloc`, or `getx`. |
 | `-f, --feature` | First feature name (Clean Architecture only). Default `home`. |
 | `--org` | Organization (reverse-domain), e.g. `com.example`. |
+| `--[no-]router` | Use `go_router` for navigation. |
+| `--[no-]di` | Add dependency injection with `get_it`. |
 | `--[no-]theme` | Add a light/dark theme setup. |
 | `--[no-]l10n` | Enable localization (multi-language). |
 | `--no-flutter-create` | Scaffold folders only; don't run `flutter create`. |
@@ -191,7 +195,6 @@ scaffolds a working counter example in the correct layer, and wires `main.dart`
 ## 🗺️ Roadmap
 
 - [ ] `nestgen feature <name>` — add a feature to an existing project.
-- [ ] More presets (DI with `get_it`, routing with `go_router`).
 - [ ] Custom template overrides.
 
 Have an idea? [Open an issue](https://github.com/zamansheikh/nestgen/issues).

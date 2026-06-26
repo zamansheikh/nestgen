@@ -20,12 +20,18 @@ class CleanArchitectureGenerator {
       importPrefix: '../$stateFolder/',
     );
 
+    // Routing: go_router (app_router.dart) or a Navigator routes map.
+    final routesImport = config.useGoRouter
+        ? 'config/routes/app_router.dart'
+        : 'config/routes/app_routes.dart';
+
     final directories = <String>[
       'lib/core/constants',
       'lib/core/errors',
       'lib/core/network',
       'lib/core/usecases',
       'lib/core/utils',
+      if (config.enableDi) 'lib/core/di',
       'lib/config/routes',
       if (config.enableTheme) 'lib/config/theme',
       if (config.enableL10n) 'lib/l10n',
@@ -80,7 +86,13 @@ class AppConstants {
   static const Duration networkTimeout = Duration(seconds: 30);
 }
 ''',
-      'lib/config/routes/app_routes.dart': '''
+      if (config.useGoRouter)
+        'lib/config/routes/app_router.dart': buildGoRouter(
+          homeImport: '../../features/$f/presentation/pages/${f}_page.dart',
+          homeClass: '${pascal}Page',
+        )
+      else
+        'lib/config/routes/app_routes.dart': '''
 import 'package:flutter/material.dart';
 
 import '../../features/$f/presentation/pages/${f}_page.dart';
@@ -95,6 +107,7 @@ class AppRoutes {
       };
 }
 ''',
+      if (config.enableDi) 'lib/core/di/service_locator.dart': buildServiceLocator(),
       'lib/features/$f/domain/entities/${f}_entity.dart': '''
 /// Pure business object for the "$f" feature — no framework imports.
 class ${pascal}Entity {
@@ -180,11 +193,12 @@ class ${pascal}RemoteDataSourceImpl implements ${pascal}RemoteDataSource {
         'lib/features/$f/presentation/$stateFolder/${entry.key}': entry.value,
       'lib/main.dart': buildMainDart(
         config: config,
-        routesImport: 'config/routes/app_routes.dart',
+        routesImport: routesImport,
         constantsImport: 'core/constants/app_constants.dart',
         themeImport: 'config/theme/app_theme.dart',
         initialRouteExpr: 'AppRoutes.home',
         routesMapExpr: 'AppRoutes.routes',
+        diImport: 'core/di/service_locator.dart',
         appWidget: presentation.appWidget,
         extraPackageImports: presentation.mainExtraImports,
         runAppWrapOpen: presentation.runAppWrapOpen,

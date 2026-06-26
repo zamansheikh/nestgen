@@ -49,6 +49,8 @@ class CreateCommand extends Command<int> {
       ..addOption('org', help: 'Organization, e.g. com.example.')
       ..addFlag('l10n', help: 'Enable localization (l10n).')
       ..addFlag('theme', help: 'Add light/dark theme setup.')
+      ..addFlag('di', help: 'Add dependency injection (get_it).')
+      ..addFlag('router', help: 'Use go_router for navigation.')
       ..addFlag(
         'no-flutter-create',
         negatable: false,
@@ -160,7 +162,19 @@ class CreateCommand extends Command<int> {
       stateManagement = StateManagement.none;
     }
 
-    // 6. Feature toggles: theming + localization.
+    // 6. Feature toggles: routing, DI, theming, localization.
+    final useGoRouter = _resolveToggle(
+      argResults,
+      'router',
+      'Use go_router for navigation?',
+      defaultValue: false,
+    );
+    final enableDi = _resolveToggle(
+      argResults,
+      'di',
+      'Add dependency injection (get_it)?',
+      defaultValue: false,
+    );
     final enableTheme = _resolveToggle(
       argResults,
       'theme',
@@ -180,6 +194,8 @@ class CreateCommand extends Command<int> {
       architecture: architecture,
       feature: feature,
       stateManagement: stateManagement,
+      enableDi: enableDi,
+      useGoRouter: useGoRouter,
       enableL10n: enableL10n,
       enableTheme: enableTheme,
     );
@@ -234,6 +250,14 @@ class CreateCommand extends Command<int> {
           sm.packageName!,
           sm.versionConstraint!,
         );
+      }
+      if (useGoRouter) {
+        needsPubGet |=
+            PubspecPatcher.addDependency(targetDir.path, 'go_router', '^17.3.0');
+      }
+      if (enableDi) {
+        needsPubGet |=
+            PubspecPatcher.addDependency(targetDir.path, 'get_it', '^9.2.1');
       }
       if (enableL10n) {
         needsPubGet |= PubspecPatcher.enableL10n(targetDir.path);
@@ -292,6 +316,8 @@ class CreateCommand extends Command<int> {
     }
     _logger
       ..info(row('State mgmt', config.stateManagement.label))
+      ..info(row('Routing', config.useGoRouter ? 'go_router' : 'Navigator'))
+      ..info(row('DI (get_it)', yn(config.enableDi)))
       ..info(row('Theme', yn(config.enableTheme)))
       ..info(row('Localization', yn(config.enableL10n)))
       ..info('  ${lightCyan.wrap('╰─')}')
