@@ -196,6 +196,7 @@ class ${pascal}RemoteDataSourceImpl implements ${pascal}RemoteDataSource {
         wrapOpen: presentation.runAppWrapOpen,
         wrapClose: presentation.runAppWrapClose,
       ),
+      'AGENT_RULE.md': buildAgentRules(config),
       if (config.enableTheme) 'lib/config/theme/app_theme.dart': buildAppTheme(),
       if (config.enableL10n) ...buildL10nFiles(config),
     };

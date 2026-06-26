@@ -28,6 +28,7 @@
 - 🎨 **Optional theming** — light/dark `ThemeData` with `ThemeMode.system`.
 - 🌍 **Optional localization (l10n)** — `flutter_localizations` + `intl`, `l10n.yaml`, ARB files, and codegen — all set up.
 - 🏷️ **Smart project setup** — prompts for organization and shows the full package id (`com.example.my_app`).
+- 🤖 **AI-ready** — generates an `AGENT_RULE.md` so AI assistants (Claude, Copilot, Cursor…) respect your architecture and avoid common mistakes.
 - ✅ **Green out of the box** — replaces Flutter's default counter test so `flutter analyze` and `flutter test` pass immediately.
 - 💻 **Cross-platform** — works the same on **Windows, macOS, and Linux**.
 - 🔤 **Three aliases** — call it `nestgen`, `ngen`, or `nest`.
